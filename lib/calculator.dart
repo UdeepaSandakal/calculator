@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class Calculator extends StatefulWidget {
   @override
@@ -6,17 +7,69 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
+  String equation = "0";
+  String result = "0";
+  String expression = "";
+  double equationFontSize = 40.0;
+  double resultFontSize = 50.0;
+
+  buttonPressed(String btnText) {
+    setState(() {
+      if (btnText == "C") {
+        equation = "0";
+        result = "0";
+        equationFontSize = 40.0;
+        resultFontSize = 50.0;
+      } else if (btnText == "⌫") {
+        equationFontSize = 40.0;
+        resultFontSize = 50.0;
+        equation = equation.substring(0, equation.length - 1);
+        if (equation == "") {
+          equation = "0";
+        }
+      } else if (btnText == "=") {
+        equationFontSize = 40.0;
+        resultFontSize = 50.0;
+
+        expression = equation;
+        expression = expression.replaceAll("x", "*");
+        expression = expression.replaceAll("÷", "/");
+
+        try {
+          Parser p = Parser();
+          Expression exp = p.parse(expression);
+
+          ContextModel cm = ContextModel();
+          result = '${exp.evaluate(EvaluationType.REAL, cm)}';
+        } catch (e) {
+          result = "Error";
+        }
+      } else {
+        equationFontSize = 50.0;
+        resultFontSize = 40.0;
+        if (equation == "0") {
+          equation = btnText;
+        } else {
+          equation = equation + btnText;
+        }
+      }
+    });
+  }
+
   Widget numButton(String btnText, Color btnColor, Color txtColor) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () => buttonPressed(btnText),
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(80, 80),
+        fixedSize: Size(75, 75),
         backgroundColor: btnColor,
         shape: CircleBorder(),
       ),
       child: Text(
         btnText,
-        style: TextStyle(fontSize: 30, color: txtColor),
+        style: TextStyle(
+          fontSize: 30,
+          color: txtColor,
+        ),
       ),
     );
   }
@@ -24,13 +77,13 @@ class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff0a0321),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text('Calculator'),
-        backgroundColor: Color(0xff0a0321),
+        backgroundColor: Colors.black,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.all(5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -38,19 +91,33 @@ class _CalculatorState extends State<Calculator> {
               alignment: Alignment.centerRight,
               padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
               child: Text(
-                "0",
-                style: TextStyle(fontSize: 50, color: Colors.white),
+                equation,
+                style:
+                    TextStyle(fontSize: equationFontSize, color: Colors.white),
               ),
             ),
             Container(
               alignment: Alignment.centerRight,
               padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
               child: Text(
-                "0",
-                style: TextStyle(fontSize: 40, color: Colors.white),
+                result,
+                style:
+                    TextStyle(fontSize: resultFontSize, color: Colors.white30),
               ),
             ),
             Expanded(child: Divider()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                numButton("⌫", Colors.black, Color.fromARGB(255, 231, 141, 141))
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Divider(
+                color: Colors.white30,
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -60,7 +127,7 @@ class _CalculatorState extends State<Calculator> {
                 numButton(
                     "%", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
                 numButton(
-                    "/", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
+                    "÷", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
               ],
             ),
             SizedBox(height: 10),
@@ -71,7 +138,7 @@ class _CalculatorState extends State<Calculator> {
                 numButton("8", Colors.white12, Colors.lightBlueAccent),
                 numButton("9", Colors.white12, Colors.lightBlueAccent),
                 numButton(
-                    "X", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
+                    "x", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
               ],
             ),
             SizedBox(height: 10),
@@ -104,7 +171,7 @@ class _CalculatorState extends State<Calculator> {
                 numButton("0", Colors.white12, Colors.lightBlueAccent),
                 numButton(".", Colors.white12, Colors.lightBlueAccent),
                 numButton(
-                    "=", Color.fromARGB(255, 231, 141, 141), Color(0xff0a0321)),
+                    "=", Color.fromARGB(255, 231, 141, 141), Colors.black),
               ],
             ),
           ],
