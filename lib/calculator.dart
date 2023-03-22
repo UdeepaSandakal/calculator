@@ -34,19 +34,23 @@ class _CalculatorState extends State<Calculator> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    '0',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: Colors.white, fontSize: 80),
-                  ),
-                )
-              ],
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+              child: Text(
+                "0",
+                style: TextStyle(fontSize: 50, color: Colors.white),
+              ),
             ),
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+              child: Text(
+                "0",
+                style: TextStyle(fontSize: 40, color: Colors.white),
+              ),
+            ),
+            Expanded(child: Divider()),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -108,4 +112,6 @@ class _CalculatorState extends State<Calculator> {
       ),
     );
   }
+
+  //logic
 }
