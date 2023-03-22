@@ -82,6 +82,17 @@ class _CalculatorState extends State<Calculator> {
               ],
             ),
             SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                numButton("1", Colors.white12, Colors.lightBlueAccent),
+                numButton("2", Colors.white12, Colors.lightBlueAccent),
+                numButton("3", Colors.white12, Colors.lightBlueAccent),
+                numButton(
+                    "+", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
+              ],
+            ),
+            SizedBox(height: 10),
           ],
         ),
       ),
