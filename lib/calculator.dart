@@ -123,9 +123,9 @@ class _CalculatorState extends State<Calculator> {
               children: [
                 numButton("C", Colors.white12, Colors.redAccent),
                 numButton(
-                    "( )", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
+                    "(", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
                 numButton(
-                    "%", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
+                    ")", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
                 numButton(
                     "÷", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
               ],
@@ -167,7 +167,8 @@ class _CalculatorState extends State<Calculator> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                numButton("+/-", Colors.white12, Colors.lightBlueAccent),
+                numButton(
+                    "%", Colors.white12, Color.fromARGB(255, 231, 141, 141)),
                 numButton("0", Colors.white12, Colors.lightBlueAccent),
                 numButton(".", Colors.white12, Colors.lightBlueAccent),
                 numButton(
